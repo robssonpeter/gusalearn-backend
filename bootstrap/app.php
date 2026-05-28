@@ -13,6 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // API-only backend — never redirect unauthenticated requests to a login page.
+        // Return null so Laravel throws AuthenticationException with a 401 JSON response.
+        $middleware->redirectGuestsTo(fn () => null);
+
         $middleware->api(prepend: [
             \Illuminate\Http\Middleware\HandleCors::class,
         ]);
