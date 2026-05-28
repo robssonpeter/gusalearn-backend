@@ -1,0 +1,19 @@
+environment:
+  php_version: "8.4"
+
+workers:
+  web:
+    scale: 1
+
+build:
+  steps:
+    - composer install --no-dev --optimize-autoloader
+    - php artisan config:cache
+    - php artisan route:cache
+    - php artisan event:cache
+
+deploy:
+  steps:
+    - php artisan migrate --force
+    - php artisan db:seed --class=LessonSeeder --force
+    - php artisan db:seed --class=BadgeSeeder --force
