@@ -13,7 +13,10 @@ class LessonController extends Controller
     public function index(Request $request): JsonResponse
     {
         $user    = $request->user();
-        $lessons = Lesson::where('is_published', true)->orderBy('order')->get();
+        $lessons = Lesson::where('is_published', true)
+                         ->with('module.learningPath')
+                         ->orderBy('order')
+                         ->get();
 
         $progressMap = Progress::where('user_id', $user->id)
                                ->whereIn('lesson_id', $lessons->pluck('id'))
@@ -50,8 +53,31 @@ class LessonController extends Controller
         return response()->json($this->formatLesson($lesson, $progress, false));
     }
 
+    public function content(Lesson $lesson): JsonResponse
+    {
+        if (!$lesson->is_published) {
+            return response()->json(['message' => 'Not found'], 404);
+        }
+
+        $sections = $lesson->sections->map(fn ($s) => [
+            'id'         => $s->id,
+            'type'       => $s->section_type,
+            'order'      => $s->display_order,
+            'xp_reward'  => $s->xp_reward,
+            'data'       => $s->data,
+        ]);
+
+        return response()->json([
+            'lesson_id' => $lesson->id,
+            'sections'  => $sections,
+        ]);
+    }
+
     private function formatLesson(Lesson $lesson, ?Progress $progress, bool $isLocked): array
     {
+        $module = $lesson->relationLoaded('module') ? $lesson->module : null;
+        $path   = $module?->relationLoaded('learningPath') ? $module->learningPath : null;
+
         return [
             'id'            => $lesson->id,
             'order'         => $lesson->order,
@@ -64,6 +90,19 @@ class LessonController extends Controller
             'xp_perfect'    => $lesson->xp_perfect,
             'is_free'       => $lesson->is_free,
             'is_locked'     => $isLocked,
+            'module'        => $module ? [
+                'id'          => $module->id,
+                'order'       => $module->order,
+                'module_code' => $module->module_code,
+                'title'       => $module->title,
+                'path'        => $path ? [
+                    'id'        => $path->id,
+                    'order'     => $path->order,
+                    'title'     => $path->title,
+                    'icon'      => $path->icon,
+                    'color_hex' => $path->color_hex,
+                ] : null,
+            ] : null,
             'progress'      => $progress ? [
                 'status'     => $progress->status,
                 'stars'      => $progress->stars,

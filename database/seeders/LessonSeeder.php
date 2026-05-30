@@ -3,12 +3,16 @@
 namespace Database\Seeders;
 
 use App\Models\Lesson;
+use App\Models\Module;
 use Illuminate\Database\Seeder;
 
 class LessonSeeder extends Seeder
 {
     public function run(): void
     {
+        // All current lessons belong to Path 1 / Module 1 (Meet Your Piano)
+        $module1 = Module::where('module_code', 'PF-M1')->first();
+
         $lessons = [
             [
                 'order'         => 1,
@@ -73,6 +77,7 @@ class LessonSeeder extends Seeder
         ];
 
         foreach ($lessons as $lesson) {
+            $lesson['module_id'] = $module1?->id;
             Lesson::updateOrCreate(['order' => $lesson['order']], $lesson);
         }
     }

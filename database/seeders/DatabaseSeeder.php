@@ -16,8 +16,11 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            LessonSeeder::class,
+            LearningPathSeeder::class,  // paths first
+            ModuleSeeder::class,        // modules second (depend on paths)
+            LessonSeeder::class,        // lessons third (depend on modules)
             BadgeSeeder::class,
+            LessonSectionSeeder::class,
         ]);
     }
 }
