@@ -25,15 +25,24 @@ class LearningPathForm
                 ColorPicker::make('color_hex')
                     ->required(),
             ]),
-            TextInput::make('title')
-                ->required()
-                ->maxLength(80)
-                ->columnSpanFull(),
-            TextInput::make('subtitle')
-                ->required()
-                ->maxLength(120)
-                ->helperText('One-line goal statement shown to students')
-                ->columnSpanFull(),
+            Grid::make(2)->schema([
+                TextInput::make('title')
+                    ->label('Title (English)')
+                    ->required()
+                    ->maxLength(80),
+                TextInput::make('title_sw')
+                    ->label('Title (Swahili)')
+                    ->maxLength(80),
+            ]),
+            Grid::make(2)->schema([
+                TextInput::make('subtitle')
+                    ->label('Subtitle / Goal (English)')
+                    ->required()
+                    ->maxLength(120),
+                TextInput::make('subtitle_sw')
+                    ->label('Subtitle / Goal (Swahili)')
+                    ->maxLength(120),
+            ]),
             Toggle::make('is_published')
                 ->helperText('Unpublished paths are hidden from students'),
         ]);

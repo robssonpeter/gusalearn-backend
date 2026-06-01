@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Module extends Model
 {
     protected $fillable = [
-        'learning_path_id', 'order', 'module_code', 'title', 'description', 'is_published',
+        'learning_path_id', 'order', 'module_code',
+        'title', 'title_sw', 'description', 'description_sw', 'is_published',
     ];
 
     protected function casts(): array

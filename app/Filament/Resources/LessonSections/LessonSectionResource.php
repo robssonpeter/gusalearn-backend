@@ -62,11 +62,13 @@ class LessonSectionResource extends Resource
                 $topics = $d['topics'] ?? [];
                 $data['topics'] = array_map(function (array $topic): array {
                     $visual = $topic['visual'] ?? [];
-                    $topic['visual_type']       = $visual['type'] ?? '';
-                    $topic['visual_keys']       = $visual['keys'] ?? [];
-                    $topic['visual_labels']     = $visual['labels'] ?? [];
-                    $topic['visual_caption_en'] = $visual['caption_en'] ?? '';
-                    $topic['visual_caption_sw'] = $visual['caption_sw'] ?? '';
+                    $topic['visual_type']            = $visual['type'] ?? '';
+                    $topic['visual_keys']            = $visual['keys'] ?? [];
+                    $topic['visual_labels']          = $visual['labels'] ?? [];
+                    $topic['visual_caption_en']      = $visual['caption_en'] ?? '';
+                    $topic['visual_caption_sw']      = $visual['caption_sw'] ?? '';
+                    $topic['visual_finger_hand']     = $visual['hand'] ?? 'right';
+                    $topic['visual_finger_fingering']= $visual['fingering'] ?? [];
                     unset($topic['visual']);
                     return $topic;
                 }, $topics);
@@ -106,6 +108,13 @@ class LessonSectionResource extends Resource
                         if ($visualType === 'highlight_keys') {
                             $visual['keys']       = $topic['visual_keys'] ?? [];
                             $visual['labels']     = $topic['visual_labels'] ?? [];
+                            $visual['caption_en'] = $topic['visual_caption_en'] ?? '';
+                            $visual['caption_sw'] = $topic['visual_caption_sw'] ?? '';
+                        }
+
+                        if ($visualType === 'finger_map') {
+                            $visual['hand']       = $topic['visual_finger_hand'] ?? 'right';
+                            $visual['fingering']  = $topic['visual_finger_fingering'] ?? [];
                             $visual['caption_en'] = $topic['visual_caption_en'] ?? '';
                             $visual['caption_sw'] = $topic['visual_caption_sw'] ?? '';
                         }

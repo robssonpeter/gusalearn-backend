@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class LearningPath extends Model
 {
     protected $fillable = [
-        'order', 'title', 'subtitle', 'icon', 'color_hex', 'is_published',
+        'order', 'title', 'title_sw', 'subtitle', 'subtitle_sw',
+        'icon', 'color_hex', 'is_published',
     ];
 
     protected function casts(): array

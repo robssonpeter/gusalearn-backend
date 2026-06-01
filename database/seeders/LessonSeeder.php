@@ -80,5 +80,22 @@ class LessonSeeder extends Seeder
             $lesson['module_id'] = $module1?->id;
             Lesson::updateOrCreate(['order' => $lesson['order']], $lesson);
         }
+
+        // Lesson 6 belongs to PF-M2 (Finger Control & Hand Position)
+        $module2 = Module::where('module_code', 'PF-M2')->first();
+        Lesson::updateOrCreate(['order' => 6], [
+            'title'         => 'Finger Numbering & Position',
+            'title_sw'      => 'Nambari za Vidole na Nafasi',
+            'description'   => 'Learn the five-finger system and C major hand position',
+            'description_sw'=> 'Jifunza mfumo wa vidole vitano na nafasi ya C major',
+            'note_sequence' => ['C4', 'D4', 'E4', 'F4', 'G4'],
+            'tempo_target'  => 60,
+            'mode_support'  => 'both',
+            'xp_completion' => 70,
+            'xp_perfect'    => 30,
+            'is_published'  => true,
+            'is_free'       => false,
+            'module_id'     => $module2?->id,
+        ]);
     }
 }

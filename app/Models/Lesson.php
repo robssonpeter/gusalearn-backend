@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Lesson extends Model
 {
     protected $fillable = [
-        'module_id', 'order', 'title', 'description', 'note_sequence',
-        'tempo_target', 'mode_support', 'xp_completion', 'xp_perfect',
-        'is_published', 'is_free',
+        'module_id', 'order', 'title', 'title_sw', 'description', 'description_sw',
+        'note_sequence', 'tempo_target', 'mode_support',
+        'xp_completion', 'xp_perfect', 'is_published', 'is_free',
     ];
 
     protected function casts(): array

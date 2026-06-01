@@ -88,6 +88,7 @@ class LessonSectionForm
                                             ''               => 'None',
                                             'keyboard_pattern' => 'Keyboard Pattern (2-3 groups)',
                                             'highlight_keys'   => 'Highlight Keys',
+                                            'finger_map'       => 'Finger Map (hand diagram)',
                                         ])
                                         ->default('')
                                         ->live(),
@@ -110,7 +111,32 @@ class LessonSectionForm
                                             ->label('Caption (English)'),
                                         TextInput::make('visual_caption_sw')
                                             ->label('Caption (Swahili)'),
-                                    ])->visible(fn (Get $get) => $get('visual_type') === 'highlight_keys'),
+                                    ])->visible(fn (Get $get) => in_array($get('visual_type'), ['highlight_keys', 'finger_map'])),
+
+                                    // ── Finger Map fields ─────────────────────────────────────
+                                    Select::make('visual_finger_hand')
+                                        ->label('Hand')
+                                        ->options(['right' => 'Right Hand', 'left' => 'Left Hand'])
+                                        ->default('right')
+                                        ->visible(fn (Get $get) => $get('visual_type') === 'finger_map'),
+
+                                    Repeater::make('visual_finger_fingering')
+                                        ->label('Fingering (one entry per finger)')
+                                        ->schema([
+                                            Select::make('finger')
+                                                ->label('Finger')
+                                                ->options([1=>'1 – Thumb',2=>'2 – Index',3=>'3 – Middle',4=>'4 – Ring',5=>'5 – Pinky'])
+                                                ->required(),
+                                            Grid::make(2)->schema([
+                                                TextInput::make('label_en')->label('Label (EN)')->placeholder('C or Thumb'),
+                                                TextInput::make('label_sw')->label('Label (SW)')->placeholder('C au Gumba'),
+                                            ]),
+                                        ])
+                                        ->defaultItems(5)
+                                        ->reorderableWithButtons()
+                                        ->collapsible()
+                                        ->itemLabel(fn (array $state): string => 'Finger ' . ($state['finger'] ?? '?') . ' → ' . ($state['label_en'] ?? ''))
+                                        ->visible(fn (Get $get) => $get('visual_type') === 'finger_map'),
                                 ]),
                         ])
                         ->itemLabel(fn (array $state): ?string => $state['title_en'] ?? null)

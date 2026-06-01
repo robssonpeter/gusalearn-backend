@@ -37,20 +37,24 @@ class PathController extends Controller
                     'order'           => $module->order,
                     'module_code'     => $module->module_code,
                     'title'           => $module->title,
+                    'title_sw'        => $module->title_sw,
                     'description'     => $module->description,
+                    'description_sw'  => $module->description_sw,
                     'lesson_count'    => $totalCount,
                     'completed_count' => $completedCount,
                 ];
             });
 
             return [
-                'id'         => $path->id,
-                'order'      => $path->order,
-                'title'      => $path->title,
-                'subtitle'   => $path->subtitle,
-                'icon'       => $path->icon,
-                'color_hex'  => $path->color_hex,
-                'modules'    => $modules,
+                'id'          => $path->id,
+                'order'       => $path->order,
+                'title'       => $path->title,
+                'title_sw'    => $path->title_sw,
+                'subtitle'    => $path->subtitle,
+                'subtitle_sw' => $path->subtitle_sw,
+                'icon'        => $path->icon,
+                'color_hex'   => $path->color_hex,
+                'modules'     => $modules,
             ];
         });
 

@@ -32,15 +32,26 @@ class ModuleForm
                     ->label('Published')
                     ->inline(false),
             ]),
-            TextInput::make('title')
-                ->required()
-                ->maxLength(80)
-                ->columnSpanFull(),
-            Textarea::make('description')
-                ->required()
-                ->maxLength(200)
-                ->rows(2)
-                ->columnSpanFull(),
+            Grid::make(2)->schema([
+                TextInput::make('title')
+                    ->label('Title (English)')
+                    ->required()
+                    ->maxLength(80),
+                TextInput::make('title_sw')
+                    ->label('Title (Swahili)')
+                    ->maxLength(80),
+            ]),
+            Grid::make(2)->schema([
+                Textarea::make('description')
+                    ->label('Description (English)')
+                    ->required()
+                    ->maxLength(200)
+                    ->rows(2),
+                Textarea::make('description_sw')
+                    ->label('Description (Swahili)')
+                    ->maxLength(200)
+                    ->rows(2),
+            ]),
         ]);
     }
 }

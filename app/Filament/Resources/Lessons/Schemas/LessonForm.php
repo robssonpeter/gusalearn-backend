@@ -33,15 +33,25 @@ class LessonForm
                 Toggle::make('is_published')->label('Published')->inline(false),
             ]),
 
-            TextInput::make('title')
-                ->required()
-                ->maxLength(80)
-                ->columnSpanFull(),
+            Grid::make(2)->schema([
+                TextInput::make('title')
+                    ->label('Title (English)')
+                    ->required()
+                    ->maxLength(80),
+                TextInput::make('title_sw')
+                    ->label('Title (Swahili)')
+                    ->maxLength(80),
+            ]),
 
-            Textarea::make('description')
-                ->required()
-                ->rows(2)
-                ->columnSpanFull(),
+            Grid::make(2)->schema([
+                Textarea::make('description')
+                    ->label('Description (English)')
+                    ->required()
+                    ->rows(2),
+                Textarea::make('description_sw')
+                    ->label('Description (Swahili)')
+                    ->rows(2),
+            ]),
 
             TagsInput::make('note_sequence')
                 ->required()
