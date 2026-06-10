@@ -142,6 +142,7 @@ class LessonSectionSeeder extends Seeder
         );
 
         $this->seedLesson6();
+        $this->seedLesson7();
 
         // ── Section 4: Music Activity ─────────────────────────────────────────
         LessonSection::updateOrCreate(
@@ -155,6 +156,144 @@ class LessonSectionSeeder extends Seeder
                     'instructions_en' => "Now let's make music!\n\nFind the C key on your keyboard and tap it. Listen to the sound.\n\nTry this simple pattern:\nC — C — C — C\n\nThen try this:\nC — C — C — C — C — C\n\nYou are already making music! 🎵\n\nPlay freely for a moment, then tap Finish Lesson when you're ready.",
                     'instructions_sw' => "Sasa tufanye muziki!\n\nTafuta kitufe cha C kwenye kibodi yako na uguse. Sikiliza sauti.\n\nJaribu muundo huu rahisi:\nC — C — C — C\n\nKisha jaribu huu:\nC — C — C — C — C — C\n\nUnafanya muziki tayari! 🎵\n\nCheza kwa uhuru kwa muda, kisha gusa Maliza Somo utakapokuwa tayari.",
                     'target_note'     => 'C',
+                ],
+            ]
+        );
+    }
+
+    private function seedLesson7(): void
+    {
+        $lesson7 = Lesson::where('order', 7)->first();
+        if (!$lesson7) return;
+
+        $lesson7->update(['xp_completion' => 80, 'xp_perfect' => 20]);
+
+        // ── Section 1: Content ────────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson7->id, 'display_order' => 1],
+            [
+                'section_type' => 'content',
+                'xp_reward'    => 20,
+                'data'         => [
+                    'topics' => [
+                        [
+                            'title_en' => 'Left Hand Finger Numbering',
+                            'title_sw' => 'Nambari za Vidole vya Mkono wa Kushoto',
+                            'body_en'  => "Both hands share the same finger numbering:\n\n• 1 — Thumb\n• 2 — Index finger\n• 3 — Middle finger\n• 4 — Ring finger\n• 5 — Pinky\n\nFor the LEFT hand, the thumb (1) sits closest to the centre of the keyboard — on the higher notes. The pinky (5) reaches to the lower notes on the left.\n\nThis is the mirror image of the right hand, but the numbers stay the same.",
+                            'body_sw'  => "Mikono yote miwili inatumia nambari sawa za vidole:\n\n• 1 — Gumba\n• 2 — Shahada\n• 3 — Kati\n• 4 — Dhahabu\n• 5 — Kidogo\n\nKwa mkono wa KUSHOTO, gumba (1) liko karibu na katikati ya kibodi — kwenye noti za juu. Kidogo (5) kinafikia noti za chini upande wa kushoto.\n\nHii ni picha ya kioo ya mkono wa kulia, lakini nambari zinabaki sawa.",
+                            'visual'   => [
+                                'type'       => 'finger_map',
+                                'hand'       => 'left',
+                                'fingering'  => [
+                                    ['finger' => 5, 'label_en' => 'Pinky',  'label_sw' => 'Kidogo'],
+                                    ['finger' => 4, 'label_en' => 'Ring',   'label_sw' => 'Dhahabu'],
+                                    ['finger' => 3, 'label_en' => 'Middle', 'label_sw' => 'Kati'],
+                                    ['finger' => 2, 'label_en' => 'Index',  'label_sw' => 'Shahada'],
+                                    ['finger' => 1, 'label_en' => 'Thumb',  'label_sw' => 'Gumba'],
+                                ],
+                                'caption_en' => 'Left hand: pinky on the left, thumb on the right',
+                                'caption_sw' => 'Mkono wa kushoto: kidogo kushoto, gumba kulia',
+                            ],
+                        ],
+                        [
+                            'title_en' => 'Left Hand Five-Finger Position',
+                            'title_sw' => 'Nafasi ya Vidole Vitano vya Mkono wa Kushoto',
+                            'body_en'  => "In the left-hand five-finger position, each finger rests on one key:\n\n  5 → C   4 → D   3 → E   2 → F   1 → G\n\nYour pinky (5) starts on C3, and your thumb (1) reaches G3.\n\nThis is the octave just below middle C — one step to the left of where your right hand sits.\n\nKeep your wrist level and fingers gently curved, just like the right hand.",
+                            'body_sw'  => "Katika nafasi ya vidole vitano vya mkono wa kushoto, kila kidole kinakaa juu ya kitufe kimoja:\n\n  5 → C   4 → D   3 → E   2 → F   1 → G\n\nKidogo chako (5) kinaanza kwenye C3, na gumba lako (1) linafikia G3.\n\nHii ni oktavu moja chini ya C ya Kati — hatua moja kushoto ya mahali ambapo mkono wako wa kulia unakaa.\n\nShikilia mkono wako sawa na vidole vikilainishwa, kama mkono wa kulia.",
+                            'visual'   => [
+                                'type'       => 'finger_map',
+                                'hand'       => 'left',
+                                'fingering'  => [
+                                    ['finger' => 5, 'label_en' => 'C', 'label_sw' => 'C'],
+                                    ['finger' => 4, 'label_en' => 'D', 'label_sw' => 'D'],
+                                    ['finger' => 3, 'label_en' => 'E', 'label_sw' => 'E'],
+                                    ['finger' => 2, 'label_en' => 'F', 'label_sw' => 'F'],
+                                    ['finger' => 1, 'label_en' => 'G', 'label_sw' => 'G'],
+                                ],
+                                'caption_en' => 'Left hand: pinky on C, thumb on G',
+                                'caption_sw' => 'Mkono wa kushoto: kidogo kwenye C, gumba kwenye G',
+                            ],
+                        ],
+                        [
+                            'title_en' => 'Playing the Left-Hand Scale',
+                            'title_sw' => 'Kupiga Ngazi ya Mkono wa Kushoto',
+                            'body_en'  => "To play a scale with your left hand, you move from pinky to thumb going up:\n\n5 (C) → 4 (D) → 3 (E) → 2 (F) → 1 (G)\n\nAnd from thumb to pinky going back down:\n\n1 (G) → 2 (F) → 3 (E) → 4 (D) → 5 (C)\n\nNotice that going UP the scale means using lower finger numbers — the opposite of the right hand.\n\nPractise slowly until each finger feels natural on its key.",
+                            'body_sw'  => "Kupiga ngazi kwa mkono wako wa kushoto, unahamia kutoka kidogo hadi gumba ukipanda juu:\n\n5 (C) → 4 (D) → 3 (E) → 2 (F) → 1 (G)\n\nNa kutoka gumba hadi kidogo ukishuka chini:\n\n1 (G) → 2 (F) → 3 (E) → 4 (D) → 5 (C)\n\nAngalia kwamba kupanda ngazi kunamaanisha kutumia nambari ndogo za vidole — kinyume na mkono wa kulia.\n\nFanya mazoezi pole pole hadi kila kidole kihisi kuwa cha kawaida kwenye kitufe chake.",
+                            'visual'   => [
+                                'type'       => 'highlight_keys',
+                                'keys'       => ['C', 'D', 'E', 'F', 'G'],
+                                'labels'     => ['C' => '5', 'D' => '4', 'E' => '3', 'F' => '2', 'G' => '1'],
+                                'caption_en' => 'Left hand span: C to G (finger 5 to finger 1)',
+                                'caption_sw' => 'Upeo wa mkono wa kushoto: C hadi G (kidole 5 hadi kidole 1)',
+                            ],
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 2: Practice ───────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson7->id, 'display_order' => 2],
+            [
+                'section_type' => 'practice',
+                'xp_reward'    => 30,
+                'data'         => [
+                    'exercises' => [
+                        [
+                            'type'            => 'note_sequence',
+                            'prompt_en'       => 'Left hand up: C D E F G (fingers 5→1)',
+                            'prompt_sw'       => 'Mkono wa kushoto juu: C D E F G (vidole 5→1)',
+                            'target_notes'    => ['C3', 'D3', 'E3', 'F3', 'G3'],
+                            'finger_sequence' => [5, 4, 3, 2, 1],
+                            'success_count'   => 2,
+                            'xp'              => 15,
+                        ],
+                        [
+                            'type'            => 'note_sequence',
+                            'prompt_en'       => 'Left hand down: G F E D C (fingers 1→5)',
+                            'prompt_sw'       => 'Mkono wa kushoto chini: G F E D C (vidole 1→5)',
+                            'target_notes'    => ['G3', 'F3', 'E3', 'D3', 'C3'],
+                            'finger_sequence' => [1, 2, 3, 4, 5],
+                            'success_count'   => 2,
+                            'xp'              => 15,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 3: Quiz ───────────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson7->id, 'display_order' => 3],
+            [
+                'section_type' => 'quiz',
+                'xp_reward'    => 30,
+                'data'         => [
+                    'passing_pct' => 67,
+                    'questions'   => [
+                        [
+                            'question_en'   => 'In the left-hand position, which finger plays the note C?',
+                            'question_sw'   => 'Katika nafasi ya mkono wa kushoto, kidole gani kinapiga noti C?',
+                            'options_en'    => ['Finger 1 (Thumb)', 'Finger 3 (Middle)', 'Finger 5 (Pinky)'],
+                            'options_sw'    => ['Kidole 1 (Gumba)', 'Kidole 3 (Kati)', 'Kidole 5 (Kidogo)'],
+                            'correct_index' => 2,
+                        ],
+                        [
+                            'question_en'   => 'In the left-hand position, which note does the thumb (finger 1) play?',
+                            'question_sw'   => 'Katika nafasi ya mkono wa kushoto, gumba (kidole 1) linapiga noti gani?',
+                            'options_en'    => ['C', 'E', 'G'],
+                            'options_sw'    => ['C', 'E', 'G'],
+                            'correct_index' => 2,
+                        ],
+                        [
+                            'question_en'   => 'Playing up the scale with your left hand (C to G), which finger number do you use first?',
+                            'question_sw'   => 'Ukipiga ngazi juu kwa mkono wako wa kushoto (C hadi G), unatumia nambari gani ya kidole kwanza?',
+                            'options_en'    => ['Finger 1', 'Finger 3', 'Finger 5'],
+                            'options_sw'    => ['Kidole 1', 'Kidole 3', 'Kidole 5'],
+                            'correct_index' => 2,
+                        ],
+                    ],
                 ],
             ]
         );

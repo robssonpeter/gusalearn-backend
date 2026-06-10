@@ -81,14 +81,29 @@ class LessonSeeder extends Seeder
             Lesson::updateOrCreate(['order' => $lesson['order']], $lesson);
         }
 
-        // Lesson 6 belongs to PF-M2 (Finger Control & Hand Position)
+        // Lessons 6 & 7 belong to PF-M2 (Finger Control & Hand Position)
         $module2 = Module::where('module_code', 'PF-M2')->first();
         Lesson::updateOrCreate(['order' => 6], [
-            'title'         => 'Finger Numbering & Position',
-            'title_sw'      => 'Nambari za Vidole na Nafasi',
-            'description'   => 'Learn the five-finger system and C major hand position',
-            'description_sw'=> 'Jifunza mfumo wa vidole vitano na nafasi ya C major',
+            'title'         => 'Right Hand Position',
+            'title_sw'      => 'Nafasi ya Mkono wa Kulia',
+            'description'   => 'Learn the five-finger system and C major right-hand position',
+            'description_sw'=> 'Jifunza mfumo wa vidole vitano na nafasi ya mkono wa kulia',
             'note_sequence' => ['C4', 'D4', 'E4', 'F4', 'G4'],
+            'tempo_target'  => 60,
+            'mode_support'  => 'both',
+            'xp_completion' => 70,
+            'xp_perfect'    => 30,
+            'is_published'  => true,
+            'is_free'       => false,
+            'module_id'     => $module2?->id,
+        ]);
+
+        Lesson::updateOrCreate(['order' => 7], [
+            'title'         => 'Left Hand Position',
+            'title_sw'      => 'Nafasi ya Mkono wa Kushoto',
+            'description'   => 'Learn the left-hand five-finger position from C3 to G3',
+            'description_sw'=> 'Jifunza nafasi ya vidole vitano vya mkono wa kushoto kutoka C3 hadi G3',
+            'note_sequence' => ['C3', 'D3', 'E3', 'F3', 'G3'],
             'tempo_target'  => 60,
             'mode_support'  => 'both',
             'xp_completion' => 70,
