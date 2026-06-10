@@ -112,5 +112,36 @@ class LessonSeeder extends Seeder
             'is_free'       => false,
             'module_id'     => $module2?->id,
         ]);
+
+        // Lessons 8 & 9: full-octave C major scale, right and left hand
+        Lesson::updateOrCreate(['order' => 8], [
+            'title'         => 'Right Hand: Full Scale',
+            'title_sw'      => 'Mkono wa Kulia: Ngazi Nzima',
+            'description'   => 'Play the C major scale C4–C5 with the thumb-tuck technique',
+            'description_sw'=> 'Piga ngazi ya C major C4–C5 kwa mbinu ya kidole gumba kupita chini',
+            'note_sequence' => ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5'],
+            'tempo_target'  => 60,
+            'mode_support'  => 'both',
+            'xp_completion' => 80,
+            'xp_perfect'    => 35,
+            'is_published'  => true,
+            'is_free'       => false,
+            'module_id'     => $module2?->id,
+        ]);
+
+        Lesson::updateOrCreate(['order' => 9], [
+            'title'         => 'Left Hand: Full Scale',
+            'title_sw'      => 'Mkono wa Kushoto: Ngazi Nzima',
+            'description'   => 'Play the C major scale C3–C4 with the finger-crossing technique',
+            'description_sw'=> 'Piga ngazi ya C major C3–C4 kwa mbinu ya kidole kupita juu',
+            'note_sequence' => ['C3', 'D3', 'E3', 'F3', 'G3', 'A3', 'B3', 'C4'],
+            'tempo_target'  => 60,
+            'mode_support'  => 'both',
+            'xp_completion' => 80,
+            'xp_perfect'    => 35,
+            'is_published'  => true,
+            'is_free'       => false,
+            'module_id'     => $module2?->id,
+        ]);
     }
 }

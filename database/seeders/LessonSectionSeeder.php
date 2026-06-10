@@ -143,6 +143,8 @@ class LessonSectionSeeder extends Seeder
 
         $this->seedLesson6();
         $this->seedLesson7();
+        $this->seedLesson8();
+        $this->seedLesson9();
 
         // ── Section 4: Music Activity ─────────────────────────────────────────
         LessonSection::updateOrCreate(
@@ -156,6 +158,270 @@ class LessonSectionSeeder extends Seeder
                     'instructions_en' => "Now let's make music!\n\nFind the C key on your keyboard and tap it. Listen to the sound.\n\nTry this simple pattern:\nC — C — C — C\n\nThen try this:\nC — C — C — C — C — C\n\nYou are already making music! 🎵\n\nPlay freely for a moment, then tap Finish Lesson when you're ready.",
                     'instructions_sw' => "Sasa tufanye muziki!\n\nTafuta kitufe cha C kwenye kibodi yako na uguse. Sikiliza sauti.\n\nJaribu muundo huu rahisi:\nC — C — C — C\n\nKisha jaribu huu:\nC — C — C — C — C — C\n\nUnafanya muziki tayari! 🎵\n\nCheza kwa uhuru kwa muda, kisha gusa Maliza Somo utakapokuwa tayari.",
                     'target_note'     => 'C',
+                ],
+            ]
+        );
+    }
+
+    private function seedLesson8(): void
+    {
+        $lesson = Lesson::where('order', 8)->first();
+        if (!$lesson) return;
+
+        $lesson->update(['xp_completion' => 90, 'xp_perfect' => 25]);
+
+        // ── Section 1: Content ────────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 1],
+            [
+                'section_type' => 'content',
+                'xp_reward'    => 25,
+                'data'         => [
+                    'topics' => [
+                        [
+                            'title_en' => 'The C Major Scale',
+                            'title_sw' => 'Ngazi ya C Major',
+                            'body_en'  => "The C major scale uses all eight white keys from one C to the next:\n\nC  D  E  F  G  A  B  C\n\nYou already know the first five (C to G) from your five-finger position. Now you'll extend through A, B, and the high C.\n\nThe full right-hand finger pattern is:\n\n1 – 2 – 3 – 1 – 2 – 3 – 4 – 5\n\nNotice that finger 1 (thumb) appears twice — once on C and once on F. This switch is called the thumb tuck.",
+                            'body_sw'  => "Ngazi ya C major inatumia vitufe vyote vinane vya nyeupe kutoka C moja hadi kinachofuata:\n\nC  D  E  F  G  A  B  C\n\nUnajua tayari vitano vya kwanza (C hadi G) kutoka nafasi yako ya vidole vitano. Sasa utaendelea kupitia A, B, na C ya juu.\n\nMuundo kamili wa vidole vya mkono wa kulia ni:\n\n1 – 2 – 3 – 1 – 2 – 3 – 4 – 5\n\nAngalia kwamba kidole 1 (gumba) kinaonekana mara mbili — mara moja kwenye C na mara moja kwenye F. Mabadiliko haya yanaitwa kidole gumba kupita chini.",
+                            'visual'   => [
+                                'type'       => 'highlight_keys',
+                                'keys'       => ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C5'],
+                                'labels'     => ['C' => '1', 'D' => '2', 'E' => '3', 'F' => '1', 'G' => '2', 'A' => '3', 'B' => '4', 'C5' => '5'],
+                                'caption_en' => 'Right hand: full C major scale fingering',
+                                'caption_sw' => 'Mkono wa kulia: vidole vya ngazi nzima ya C major',
+                            ],
+                        ],
+                        [
+                            'title_en' => 'The Thumb Tuck',
+                            'title_sw' => 'Kidole Gumba Kupita Chini',
+                            'body_en'  => "After playing E with finger 3, you need to swing your thumb (finger 1) silently UNDER your middle finger so it lands on F — just as finger 3 lifts off E.\n\nHow to practise:\n1. Play C–D–E slowly (fingers 1–2–3)\n2. While finger 3 is still on E, begin moving your thumb under toward F\n3. As you lift finger 3, press F with your thumb\n4. Continue: G (2) – A (3) – B (4) – C (5)\n\nThe wrist should stay level — no jumping or twisting.",
+                            'body_sw'  => "Baada ya kupiga E kwa kidole 3, unahitaji kupeleka gumba lako (kidole 1) kwa utulivu CHINI ya kidole cha kati ili liweke F — wakati kidole 3 kinaondoka E.\n\nJinsi ya kufanya mazoezi:\n1. Piga C–D–E polepole (vidole 1–2–3)\n2. Kidole 3 kikiwa bado kwenye E, anza kuhamisha gumba lako chini kuelekea F\n3. Ukiinua kidole 3, bonyeza F kwa gumba lako\n4. Endelea: G (2) – A (3) – B (4) – C (5)\n\nMkono uwe sawa — usiruke wala kupinda.",
+                            'visual'   => [
+                                'type'       => 'finger_map',
+                                'hand'       => 'right',
+                                'fingering'  => [
+                                    ['finger' => 1, 'label_en' => 'C / F', 'label_sw' => 'C / F'],
+                                    ['finger' => 2, 'label_en' => 'D / G', 'label_sw' => 'D / G'],
+                                    ['finger' => 3, 'label_en' => 'E / A', 'label_sw' => 'E / A'],
+                                    ['finger' => 4, 'label_en' => 'B',     'label_sw' => 'B'],
+                                    ['finger' => 5, 'label_en' => 'C5',    'label_sw' => 'C5'],
+                                ],
+                                'caption_en' => 'Thumb plays C then tucks under to play F',
+                                'caption_sw' => 'Gumba linapiga C kisha kupita chini kupiga F',
+                            ],
+                        ],
+                        [
+                            'title_en' => 'Descending: Finger Crossover',
+                            'title_sw' => 'Kushuka: Kidole Kupita Juu',
+                            'body_en'  => "Coming back down from C5 to C4, the finger pattern reverses:\n\n5 – 4 – 3 – 2 – 1 – 3 – 2 – 1\n\nAfter your thumb plays F (position 1 in the second group), finger 3 crosses OVER the thumb to land on E, allowing your hand to shift back to the starting position.\n\nFull descending: C5(5) B(4) A(3) G(2) F(1) E(3) D(2) C4(1)\n\nPractise ascending and descending slowly, keeping an even tone on every note.",
+                            'body_sw'  => "Kurudi chini kutoka C5 hadi C4, mfumo wa vidole unabadilika:\n\n5 – 4 – 3 – 2 – 1 – 3 – 2 – 1\n\nBaada ya gumba lako kupiga F (nafasi ya 1 katika kundi la pili), kidole 3 kinapita JUU ya gumba kuweka E, ikiruhusu mkono wako kurudi nafasi ya kuanza.\n\nKushuka kamili: C5(5) B(4) A(3) G(2) F(1) E(3) D(2) C4(1)\n\nFanya mazoezi ya kupanda na kushuka polepole, ukishika sauti sawa kwenye kila noti.",
+                            'visual'   => [
+                                'type'       => 'highlight_keys',
+                                'keys'       => ['C5', 'B', 'A', 'G', 'F', 'E', 'D', 'C'],
+                                'labels'     => ['C5' => '5', 'B' => '4', 'A' => '3', 'G' => '2', 'F' => '1', 'E' => '3', 'D' => '2', 'C' => '1'],
+                                'caption_en' => 'Right hand descending: 5 4 3 2 1 — then 3 2 1',
+                                'caption_sw' => 'Mkono wa kulia kushuka: 5 4 3 2 1 — kisha 3 2 1',
+                            ],
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 2: Practice ───────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 2],
+            [
+                'section_type' => 'practice',
+                'xp_reward'    => 35,
+                'data'         => [
+                    'exercises' => [
+                        [
+                            'type'            => 'note_sequence',
+                            'prompt_en'       => 'Right hand up: C D E F G A B C  (1 2 3 1 2 3 4 5)',
+                            'prompt_sw'       => 'Mkono wa kulia juu: C D E F G A B C  (1 2 3 1 2 3 4 5)',
+                            'target_notes'    => ['C4','D4','E4','F4','G4','A4','B4','C5'],
+                            'finger_sequence' => [1,2,3,1,2,3,4,5],
+                            'success_count'   => 2,
+                            'xp'              => 18,
+                        ],
+                        [
+                            'type'            => 'note_sequence',
+                            'prompt_en'       => 'Right hand down: C B A G F E D C  (5 4 3 2 1 3 2 1)',
+                            'prompt_sw'       => 'Mkono wa kulia chini: C B A G F E D C  (5 4 3 2 1 3 2 1)',
+                            'target_notes'    => ['C5','B4','A4','G4','F4','E4','D4','C4'],
+                            'finger_sequence' => [5,4,3,2,1,3,2,1],
+                            'success_count'   => 2,
+                            'xp'              => 17,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 3: Quiz ───────────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 3],
+            [
+                'section_type' => 'quiz',
+                'xp_reward'    => 30,
+                'data'         => [
+                    'passing_pct' => 67,
+                    'questions'   => [
+                        [
+                            'question_en'   => 'In the right-hand C major scale, which finger plays F (the thumb-tuck note)?',
+                            'question_sw'   => 'Katika ngazi ya C major ya mkono wa kulia, kidole gani kinapiga F (noti ya gumba kupita chini)?',
+                            'options_en'    => ['Finger 2 (Index)', 'Finger 1 (Thumb)', 'Finger 3 (Middle)'],
+                            'options_sw'    => ['Kidole 2 (Shahada)', 'Kidole 1 (Gumba)', 'Kidole 3 (Kati)'],
+                            'correct_index' => 1,
+                        ],
+                        [
+                            'question_en'   => 'What is the complete ascending fingering for the right-hand C major scale?',
+                            'question_sw'   => 'Ni nini mfumo kamili wa vidole wa kupanda wa ngazi ya C major ya mkono wa kulia?',
+                            'options_en'    => ['1 2 3 4 5 1 2 3', '1 2 3 1 2 3 4 5', '5 4 3 2 1 3 2 1'],
+                            'options_sw'    => ['1 2 3 4 5 1 2 3', '1 2 3 1 2 3 4 5', '5 4 3 2 1 3 2 1'],
+                            'correct_index' => 1,
+                        ],
+                        [
+                            'question_en'   => 'Descending from C5 back to C4, which finger plays E?',
+                            'question_sw'   => 'Ukishuka kutoka C5 kurudi C4, kidole gani kinapiga E?',
+                            'options_en'    => ['Finger 1 (Thumb)', 'Finger 4 (Ring)', 'Finger 3 (Middle)'],
+                            'options_sw'    => ['Kidole 1 (Gumba)', 'Kidole 4 (Dhahabu)', 'Kidole 3 (Kati)'],
+                            'correct_index' => 2,
+                        ],
+                    ],
+                ],
+            ]
+        );
+    }
+
+    private function seedLesson9(): void
+    {
+        $lesson = Lesson::where('order', 9)->first();
+        if (!$lesson) return;
+
+        $lesson->update(['xp_completion' => 90, 'xp_perfect' => 25]);
+
+        // ── Section 1: Content ────────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 1],
+            [
+                'section_type' => 'content',
+                'xp_reward'    => 25,
+                'data'         => [
+                    'topics' => [
+                        [
+                            'title_en' => 'Left Hand Full Scale',
+                            'title_sw' => 'Ngazi Nzima ya Mkono wa Kushoto',
+                            'body_en'  => "You already know the left-hand five-finger position: pinky (5) on C3, thumb (1) on G3. Now you'll extend that to cover the full C major scale all the way to C4.\n\nThe full ascending fingering is:\n\n5 – 4 – 3 – 2 – 1 – 3 – 2 – 1\n\nThe thumb (1) plays G3 — then finger 3 crosses OVER the thumb to reach A3. This is called the finger crossover, and it shifts your hand into the second position to cover A, B, and C.",
+                            'body_sw'  => "Unajua tayari nafasi ya vidole vitano vya mkono wa kushoto: kidogo (5) kwenye C3, gumba (1) kwenye G3. Sasa utaendelea ili kufunika ngazi nzima ya C major hadi C4.\n\nMfumo kamili wa kupanda ni:\n\n5 – 4 – 3 – 2 – 1 – 3 – 2 – 1\n\nGumba (1) linapiga G3 — kisha kidole 3 kinapita JUU ya gumba kufikia A3. Hii inaitwa kupita kwa kidole, na inahamisha mkono wako kwenye nafasi ya pili ili kufunika A, B, na C.",
+                            'visual'   => [
+                                'type'       => 'highlight_keys',
+                                'keys'       => ['C', 'D', 'E', 'F', 'G', 'A', 'B', 'C5'],
+                                'labels'     => ['C' => '5', 'D' => '4', 'E' => '3', 'F' => '2', 'G' => '1', 'A' => '3', 'B' => '2', 'C5' => '1'],
+                                'caption_en' => 'Left hand: full C major scale fingering',
+                                'caption_sw' => 'Mkono wa kushoto: vidole vya ngazi nzima ya C major',
+                            ],
+                        ],
+                        [
+                            'title_en' => 'The Finger Crossover',
+                            'title_sw' => 'Kupita kwa Kidole',
+                            'body_en'  => "After playing G3 with your thumb, finger 3 (middle finger) swings OVER the thumb to land on A3 while the thumb lifts. This is the left-hand equivalent of the right-hand thumb tuck.\n\nHow to practise:\n1. Play C3–G3 slowly (fingers 5–4–3–2–1)\n2. While your thumb is on G3, position finger 3 above A3\n3. As you lift your thumb, press A3 with finger 3\n4. Continue: B3 (2) – C4 (1)\n\nKeep the movement smooth — the wrist should stay steady, only the fingers move.",
+                            'body_sw'  => "Baada ya kupiga G3 kwa gumba lako, kidole 3 (kidole cha kati) kinapiga JUURANI ya gumba kuweka A3 wakati gumba linainuka. Hii ni sawa na kidole gumba kupita chini kwa mkono wa kulia.\n\nJinsi ya kufanya mazoezi:\n1. Piga C3–G3 polepole (vidole 5–4–3–2–1)\n2. Gumba lako likiwa kwenye G3, weka kidole 3 juu ya A3\n3. Ukiinua gumba lako, bonyeza A3 kwa kidole 3\n4. Endelea: B3 (2) – C4 (1)\n\nShikilia harakati iwe laini — mkono uwe imara, vidole tu ndivyo vinavyohamia.",
+                            'visual'   => [
+                                'type'       => 'finger_map',
+                                'hand'       => 'left',
+                                'fingering'  => [
+                                    ['finger' => 5, 'label_en' => 'C',    'label_sw' => 'C'],
+                                    ['finger' => 4, 'label_en' => 'D',    'label_sw' => 'D'],
+                                    ['finger' => 3, 'label_en' => 'E / A','label_sw' => 'E / A'],
+                                    ['finger' => 2, 'label_en' => 'F / B','label_sw' => 'F / B'],
+                                    ['finger' => 1, 'label_en' => 'G / C','label_sw' => 'G / C'],
+                                ],
+                                'caption_en' => 'After crossing, fingers 3–2–1 cover A–B–C',
+                                'caption_sw' => 'Baada ya kupita, vidole 3–2–1 vifunika A–B–C',
+                            ],
+                        ],
+                        [
+                            'title_en' => 'Descending: Thumb Tuck',
+                            'title_sw' => 'Kushuka: Gumba Kupita Chini',
+                            'body_en'  => "Coming back down from C4 to C3, the pattern reverses:\n\n1 – 2 – 3 – 1 – 2 – 3 – 4 – 5\n\nAfter your thumb plays G3 (in the second group), it tucks UNDER finger 3 to land back on F3, allowing your hand to return to the starting position.\n\nFull descending: C4(1) B3(2) A3(3) G3(1) F3(2) E3(3) D3(4) C3(5)\n\nPractise slowly until both directions feel natural before increasing speed.",
+                            'body_sw'  => "Kurudi chini kutoka C4 hadi C3, mfumo unabadilika:\n\n1 – 2 – 3 – 1 – 2 – 3 – 4 – 5\n\nBaada ya gumba lako kupiga G3 (katika kundi la pili), linapita CHINI ya kidole 3 kuweka F3, kuruhusu mkono wako kurudi nafasi ya kuanza.\n\nKushuka kamili: C4(1) B3(2) A3(3) G3(1) F3(2) E3(3) D3(4) C3(5)\n\nFanya mazoezi polepole hadi mwelekeo wote mbili uhisi wa kawaida kabla ya kuongeza kasi.",
+                            'visual'   => [
+                                'type'       => 'highlight_keys',
+                                'keys'       => ['C5', 'B', 'A', 'G', 'F', 'E', 'D', 'C'],
+                                'labels'     => ['C5' => '1', 'B' => '2', 'A' => '3', 'G' => '1', 'F' => '2', 'E' => '3', 'D' => '4', 'C' => '5'],
+                                'caption_en' => 'Left hand descending: 1 2 3 — thumb tuck — 1 2 3 4 5',
+                                'caption_sw' => 'Mkono wa kushoto kushuka: 1 2 3 — gumba chini — 1 2 3 4 5',
+                            ],
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 2: Practice ───────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 2],
+            [
+                'section_type' => 'practice',
+                'xp_reward'    => 35,
+                'data'         => [
+                    'exercises' => [
+                        [
+                            'type'            => 'note_sequence',
+                            'prompt_en'       => 'Left hand up: C D E F G A B C  (5 4 3 2 1 3 2 1)',
+                            'prompt_sw'       => 'Mkono wa kushoto juu: C D E F G A B C  (5 4 3 2 1 3 2 1)',
+                            'target_notes'    => ['C3','D3','E3','F3','G3','A3','B3','C4'],
+                            'finger_sequence' => [5,4,3,2,1,3,2,1],
+                            'success_count'   => 2,
+                            'xp'              => 18,
+                        ],
+                        [
+                            'type'            => 'note_sequence',
+                            'prompt_en'       => 'Left hand down: C B A G F E D C  (1 2 3 1 2 3 4 5)',
+                            'prompt_sw'       => 'Mkono wa kushoto chini: C B A G F E D C  (1 2 3 1 2 3 4 5)',
+                            'target_notes'    => ['C4','B3','A3','G3','F3','E3','D3','C3'],
+                            'finger_sequence' => [1,2,3,1,2,3,4,5],
+                            'success_count'   => 2,
+                            'xp'              => 17,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 3: Quiz ───────────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 3],
+            [
+                'section_type' => 'quiz',
+                'xp_reward'    => 30,
+                'data'         => [
+                    'passing_pct' => 67,
+                    'questions'   => [
+                        [
+                            'question_en'   => 'In the left-hand C major scale, which finger plays G3 (before the crossing)?',
+                            'question_sw'   => 'Katika ngazi ya C major ya mkono wa kushoto, kidole gani kinapiga G3 (kabla ya kupita)?',
+                            'options_en'    => ['Finger 5 (Pinky)', 'Finger 3 (Middle)', 'Finger 1 (Thumb)'],
+                            'options_sw'    => ['Kidole 5 (Kidogo)', 'Kidole 3 (Kati)', 'Kidole 1 (Gumba)'],
+                            'correct_index' => 2,
+                        ],
+                        [
+                            'question_en'   => 'After the crossing, which finger plays A3?',
+                            'question_sw'   => 'Baada ya kupita, kidole gani kinapiga A3?',
+                            'options_en'    => ['Finger 1', 'Finger 2', 'Finger 3'],
+                            'options_sw'    => ['Kidole 1', 'Kidole 2', 'Kidole 3'],
+                            'correct_index' => 2,
+                        ],
+                        [
+                            'question_en'   => 'What is the complete ascending fingering for the left-hand C major scale?',
+                            'question_sw'   => 'Ni nini mfumo kamili wa vidole wa kupanda wa ngazi ya C major ya mkono wa kushoto?',
+                            'options_en'    => ['5 4 3 2 1 2 3 4', '1 2 3 1 2 3 4 5', '5 4 3 2 1 3 2 1'],
+                            'options_sw'    => ['5 4 3 2 1 2 3 4', '1 2 3 1 2 3 4 5', '5 4 3 2 1 3 2 1'],
+                            'correct_index' => 2,
+                        ],
+                    ],
                 ],
             ]
         );
