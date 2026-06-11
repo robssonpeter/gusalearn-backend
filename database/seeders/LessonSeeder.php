@@ -143,5 +143,23 @@ class LessonSeeder extends Seeder
             'is_free'       => false,
             'module_id'     => $module2?->id,
         ]);
+
+        // Lesson 10 belongs to PF-M4 (First Songs)
+        $module4 = Module::where('module_code', 'PF-M4')->first();
+        Lesson::updateOrCreate(['order' => 10], [
+            'title'         => 'Mary Had a Little Lamb',
+            'title_sw'      => 'Maria Alikuwa na Mwana-Kondoo Mdogo',
+            'description'   => 'Play your first real melody using C, D, E and G',
+            'description_sw'=> 'Piga wimbo wako wa kwanza wa kweli ukitumia C, D, E na G',
+            'note_sequence' => ['E4','D4','C4','D4','E4','E4','E4','D4','D4','D4','E4','G4','G4',
+                                'E4','D4','C4','D4','E4','E4','E4','E4','D4','D4','E4','D4','C4'],
+            'tempo_target'  => 70,
+            'mode_support'  => 'both',
+            'xp_completion' => 80,
+            'xp_perfect'    => 35,
+            'is_published'  => true,
+            'is_free'       => false,
+            'module_id'     => $module4?->id,
+        ]);
     }
 }

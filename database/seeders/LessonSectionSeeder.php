@@ -145,6 +145,7 @@ class LessonSectionSeeder extends Seeder
         $this->seedLesson7();
         $this->seedLesson8();
         $this->seedLesson9();
+        $this->seedLesson10();
 
         // ── Section 4: Music Activity ─────────────────────────────────────────
         LessonSection::updateOrCreate(
@@ -696,6 +697,147 @@ class LessonSectionSeeder extends Seeder
                             'options_en'    => ['E', 'F', 'G'],
                             'options_sw'    => ['E', 'F', 'G'],
                             'correct_index' => 2,
+                        ],
+                    ],
+                ],
+            ]
+        );
+    }
+
+    private function seedLesson10(): void
+    {
+        $lesson = Lesson::where('order', 10)->first();
+        if (!$lesson) return;
+
+        $lesson->update(['xp_completion' => 80, 'xp_perfect' => 35]);
+
+        // ── Section 1: Content ────────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 1],
+            [
+                'section_type' => 'content',
+                'xp_reward'    => 20,
+                'data'         => [
+                    'topics' => [
+                        [
+                            'title_en' => 'Your First Real Song',
+                            'title_sw' => 'Wimbo Wako wa Kweli wa Kwanza',
+                            'body_en'  => "\"Mary Had a Little Lamb\" is one of the most recognised melodies in the world — and you already know all the notes needed to play it!\n\nThe entire song uses only four notes:\n\n  C   D   E   G\n\nThese are four of the five notes you practiced in the right-hand five-finger position. Finger 4 (F) sits out for this one.\n\nThis is the moment your technique turns into music.",
+                            'body_sw'  => "\"Maria Alikuwa na Mwana-Kondoo Mdogo\" ni moja ya nyimbo zinazojulikana zaidi duniani — na unajua tayari noti zote unazohitaji kuipiga!\n\nWimbo wote unatumia noti nne tu:\n\n  C   D   E   G\n\nHizi ni nne kati ya noti tano ulizofanya mazoezi nazo katika nafasi ya vidole vitano ya mkono wa kulia. Kidole 4 (F) haichezi katika wimbo huu.\n\nHii ndiyo wakati mbinu yako inakuwa muziki.",
+                            'visual'   => [
+                                'type'       => 'highlight_keys',
+                                'keys'       => ['C', 'D', 'E', 'G'],
+                                'labels'     => ['C' => '1', 'D' => '2', 'E' => '3', 'G' => '5'],
+                                'caption_en' => 'Four notes, four fingers — F takes a rest',
+                                'caption_sw' => 'Noti nne, vidole vinne — F inastaafu',
+                            ],
+                        ],
+                        [
+                            'title_en' => 'The First Phrase',
+                            'title_sw' => 'Mshororo wa Kwanza',
+                            'body_en'  => "The melody starts on E (finger 3) — not on C. This surprises many beginners!\n\nFirst phrase: \"Mary had a little lamb\"\n\n  E – D – C – D – E – E – E\n  3 – 2 – 1 – 2 – 3 – 3 – 3\n\nThen the two answering phrases:\n\n  D – D – D          (little lamb)\n  E – G – G          (little lamb)\n\nPractise these 13 notes as one smooth sweep before moving to the full song.",
+                            'body_sw'  => "Wimbo unaanza kwenye E (kidole 3) — si kwenye C. Hii inashangaza wanafunzi wengi!\n\nMshororo wa kwanza: \"Maria alikuwa na mwana-kondoo mdogo\"\n\n  E – D – C – D – E – E – E\n  3 – 2 – 1 – 2 – 3 – 3 – 3\n\nKisha mishororo miwili ya jibu:\n\n  D – D – D          (mwana-kondoo mdogo)\n  E – G – G          (mwana-kondoo mdogo)\n\nFanya mazoezi ya noti 13 hizi kama mtiririko mmoja laini kabla ya kwenda kwenye wimbo wote.",
+                            'visual'   => [
+                                'type'       => 'finger_sequence',
+                                'hand'       => 'right',
+                                'notes'      => ['E','D','C','D','E','E','E','D','D','D','E','G','G'],
+                                'fingers'    => [3,2,1,2,3,3,3,2,2,2,3,5,5],
+                                'caption_en' => 'Phrase 1 — 13 notes',
+                                'caption_sw' => 'Mshororo 1 — noti 13',
+                            ],
+                        ],
+                        [
+                            'title_en' => 'Completing the Song',
+                            'title_sw' => 'Kukamilisha Wimbo',
+                            'body_en'  => "The second half repeats the opening and ends with a descending phrase that resolves back to C:\n\n  E – D – C – D – E – E – E – E   (Mary had a little lamb)\n  D – D – E – D – C               (Its fleece was white as snow)\n\nThe final four notes E – D – C land smoothly back on the tonic (C).\n\nFull song finger guide:\n\n  3 2 1 2 3 3 3 | 2 2 2 | 3 5 5\n  3 2 1 2 3 3 3 3 | 2 2 3 2 1\n\nKeep a steady, even tempo throughout — resist the urge to rush the repeated notes.",
+                            'body_sw'  => "Nusu ya pili inarudia mwanzo na kuishia na mshororo unaoshuka kurudi C:\n\n  E – D – C – D – E – E – E – E   (Maria alikuwa na mwana-kondoo mdogo)\n  D – D – E – D – C               (Nywele zake zilikuwa nyeupe kama theluji)\n\nNoti nne za mwisho E – D – C zinarudi laini kwenye tonic (C).\n\nMwongozo wa vidole wa wimbo wote:\n\n  3 2 1 2 3 3 3 | 2 2 2 | 3 5 5\n  3 2 1 2 3 3 3 3 | 2 2 3 2 1\n\nDumisha tempo thabiti na sawa — usipige haraka noti zinazorudiwa.",
+                            'visual'   => [
+                                'type'       => 'highlight_keys',
+                                'keys'       => ['C', 'D', 'E', 'G'],
+                                'labels'     => ['C' => 'C', 'D' => 'D', 'E' => 'E', 'G' => 'G'],
+                                'caption_en' => 'Full song — 26 notes, 4 different keys',
+                                'caption_sw' => 'Wimbo wote — noti 26, vitufe 4 tofauti',
+                            ],
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 2: Practice — Phrase 1 ───────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 2],
+            [
+                'section_type' => 'practice',
+                'xp_reward'    => 30,
+                'data'         => [
+                    'exercises' => [
+                        [
+                            'type'            => 'note_sequence',
+                            'prompt_en'       => 'Phrase 1: E D C D E E E  D D D  E G G  (fingers 3 2 1 2 3 3 3 · 2 2 2 · 3 5 5)',
+                            'prompt_sw'       => 'Mshororo 1: E D C D E E E  D D D  E G G  (vidole 3 2 1 2 3 3 3 · 2 2 2 · 3 5 5)',
+                            'target_notes'    => ['E4','D4','C4','D4','E4','E4','E4','D4','D4','D4','E4','G4','G4'],
+                            'finger_sequence' => [3,2,1,2,3,3,3,2,2,2,3,5,5],
+                            'success_count'   => 2,
+                            'xp'              => 15,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 3: Practice — Full Song ──────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 3],
+            [
+                'section_type' => 'practice',
+                'xp_reward'    => 30,
+                'data'         => [
+                    'exercises' => [
+                        [
+                            'type'            => 'note_sequence',
+                            'prompt_en'       => 'Full song: E D C D E E E  D D D  E G G  E D C D E E E E  D D E D C',
+                            'prompt_sw'       => 'Wimbo wote: E D C D E E E  D D D  E G G  E D C D E E E E  D D E D C',
+                            'target_notes'    => ['E4','D4','C4','D4','E4','E4','E4','D4','D4','D4','E4','G4','G4',
+                                                  'E4','D4','C4','D4','E4','E4','E4','E4','D4','D4','E4','D4','C4'],
+                            'finger_sequence' => [3,2,1,2,3,3,3,2,2,2,3,5,5,3,2,1,2,3,3,3,3,2,2,3,2,1],
+                            'success_count'   => 1,
+                            'xp'              => 15,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        // ── Section 4: Quiz ───────────────────────────────────────────────────
+        LessonSection::updateOrCreate(
+            ['lesson_id' => $lesson->id, 'display_order' => 4],
+            [
+                'section_type' => 'quiz',
+                'xp_reward'    => 20,
+                'data'         => [
+                    'passing_pct' => 67,
+                    'questions'   => [
+                        [
+                            'question_en'   => 'What is the very first note of "Mary Had a Little Lamb"?',
+                            'question_sw'   => 'Noti ya kwanza kabisa ya "Maria Alikuwa na Mwana-Kondoo Mdogo" ni ipi?',
+                            'options_en'    => ['C (finger 1)', 'D (finger 2)', 'E (finger 3)'],
+                            'options_sw'    => ['C (kidole 1)', 'D (kidole 2)', 'E (kidole 3)'],
+                            'correct_index' => 2,
+                        ],
+                        [
+                            'question_en'   => 'Which finger plays G in this song?',
+                            'question_sw'   => 'Kidole gani kinapiga G katika wimbo huu?',
+                            'options_en'    => ['Finger 3 (Middle)', 'Finger 4 (Ring)', 'Finger 5 (Pinky)'],
+                            'options_sw'    => ['Kidole 3 (Kati)', 'Kidole 4 (Dhahabu)', 'Kidole 5 (Kidogo)'],
+                            'correct_index' => 2,
+                        ],
+                        [
+                            'question_en'   => 'How many different notes does "Mary Had a Little Lamb" use?',
+                            'question_sw'   => '"Maria Alikuwa na Mwana-Kondoo Mdogo" inatumia noti tofauti ngapi?',
+                            'options_en'    => ['Three (C D E)', 'Four (C D E G)', 'Five (C D E F G)'],
+                            'options_sw'    => ['Tatu (C D E)', 'Nne (C D E G)', 'Tano (C D E F G)'],
+                            'correct_index' => 1,
                         ],
                     ],
                 ],
